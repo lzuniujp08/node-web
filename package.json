@@ -1,0 +1,14 @@
+{
+  "name": "node-web",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodejs-websocket": "^1.7.2"
+  },
+  "devDependencies": {}
+}

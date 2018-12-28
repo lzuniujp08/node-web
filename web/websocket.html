@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<div id="app">
+    <ul class="message-list">
+        <li :class="item.user === user ? 'message-other' : 'message-me'" v-for="item in message">
+            {{ item.message }}
+        </li>
+    </ul>
+    <input type="text" id="message">
+    <input type="button" id="send" value="发送">
+</div>
+<script>
+  var user = Math.random().toString(36).substr(2);
+  var app = new Vue({
+    el: '#app',
+    data: {
+      ws: null,
+      user: user,
+      message: []
+    },
+    mounted() {
+      this.initWebSocket()
+    },
+    methods: {
+      initWebSocket() {
+        var self = this;
+        if(window.WebSocket){
+          self.ws = new WebSocket('ws://localhost:8001');
+
+          self.ws.onopen = function(e){
+            console.log("连接服务器成功");
+          };
+          self.ws.onclose = function(e){
+            console.log("服务器关闭");
+          };
+          self.ws.onerror = function(){
+            console.log("连接出错");
+          };
+          self.ws.onmessage = function(e){
+            console.log("连接服务器成功");
+            var message = e.data;
+            console.log(message);
+            var msg = message.split(';');
+            self.message.push({
+              user: msg[0],
+              message: msg[1]
+            })
+          };
+          document.getElementById('send').onclick = function(e){
+            self.ws.send(user + ";" + document.getElementById('message').value);
+          };
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>

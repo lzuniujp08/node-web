@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    var HOST = 'http://localhost:3000';
+    var paras = {
+      name: 'lzugis'
+    };
+    $.post(HOST + '/getUserInfo', paras, function (res) {
+        console.log(res);
+    })
+</script>
+</body>
+</html>
